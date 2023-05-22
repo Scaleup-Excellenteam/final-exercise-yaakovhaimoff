@@ -1,3 +1,4 @@
+import argparse
 import asyncio
 import time
 import backoff
@@ -101,11 +102,17 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Process PowerPoint presentation and generate explanations.')
+    parser.add_argument('presentation', metavar='presentation', type=str,
+                        help='path to the PowerPoint presentation')
+    args = parser.parse_args()
+
     messages = [
         {"role": "system", "content": "Please summarize the slides and provide additional information."}
     ]
-    presentation_path = 'final.pptx'
-    # presentation_path = input("Enter the path to the presentation: ")
+
+    presentation_path = args.presentation
+    # presentation_path = "final.pptx"
     print(f"Processing {presentation_path}")
     start_time = time.time()
     asyncio.run(main())
