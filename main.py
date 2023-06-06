@@ -54,7 +54,8 @@ async def get_response(slide) -> str:
     messages.append({"role": "user", "content": process_slide_text(slide)})
     response = await openai.ChatCompletion.acreate(
         model="gpt-3.5-turbo",
-        messages=messages
+        messages=messages,
+        timeout=60,
     )
     return response["choices"][0].message.content
 
@@ -96,14 +97,14 @@ async def main() -> None:
     """
     Main function to run the program.
     """
-    openai.api_key = "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"
+    openai.api_key = "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"
     explanations = await process_presentation()
     print_to_file(explanations)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process PowerPoint presentation and generate explanations.')
-    parser.add_argument('presentation', metavar='presentation', type=str,
+    parser.add_argument('presentation_path', metavar='presentation_path', type=str,
                         help='path to the PowerPoint presentation')
     args = parser.parse_args()
 
@@ -111,7 +112,7 @@ if __name__ == "__main__":
         {"role": "system", "content": "Please summarize the slides and provide additional information."}
     ]
 
-    presentation_path = args.presentation
+    presentation_path = args.presentation_path
     # presentation_path = "final.pptx"
     print(f"Processing {presentation_path}")
     start_time = time.time()
