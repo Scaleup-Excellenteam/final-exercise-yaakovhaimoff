@@ -37,7 +37,7 @@ async def main():
     slides = presentation_parser.process_presentation()
 
     # Generate explanations
-    openai_api = OpenAIAPI(api_key="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")
+    openai_api = OpenAIAPI(api_key="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")
     explanations = await openai_api.generate_explanations(slides)
 
     # Print explanations to file
